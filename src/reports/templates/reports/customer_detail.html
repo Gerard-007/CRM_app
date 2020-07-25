@@ -1,0 +1,161 @@
+{% extends 'layout.html' %}
+
+{% block title %} customers {% endblock title %}
+
+
+{% block content %}
+<br>
+<br>
+<br>
+<br>
+<div class="container-fluid">
+    <div class="row">
+        <div class="col-md-4">
+            <div class="card">
+                <!-- Card header -->
+                <div class="card-header">
+                    <div class="row align-items-center">
+                        <div class="col-8">
+                            <!-- Title -->
+                            <h5 class="h3 mb-0">Customer</h5>
+                        </div>
+                    </div>
+                </div>
+                <!-- Card image -->
+                <!-- List group -->
+                <ul class="list-group list-group-flush">
+                    <li class="list-group-item"><button type="button" class="btn btn-outline-info btn-lg btn-block">Update Customer</button></li>
+                    <li class="list-group-item"><button type="button" class="btn btn-outline-warning btn-lg btn-block">Delete Customer</button></li>
+                </ul>
+            </div>
+        </div>
+
+        <div class="col-md-4">
+            <div class="card">
+                <!-- Card header -->
+                <div class="card-header">
+                    <div class="row align-items-center">
+                        <div class="col-8">
+                            <!-- Title -->
+                            <h5 class="h3 mb-0">Contact infomation</h5>
+                        </div>
+                    </div>
+                </div>
+                <!-- Card image -->
+                <!-- List group -->
+                
+                <!-- Card body -->
+                <div class="card-body">
+                    <p class="card-text mb-4">Email:  {{customer.email}}</p>
+                    <p class="card-text mb-4">Customer-ID:  {{customer.name}}</p>
+                    <p class="card-text mb-4">Phone:  {{customer.phone}}</p>
+                </div>
+            </div>
+        </div>
+
+        <div class="col-md-4">
+            <div class="card">
+                <!-- Card header -->
+                <div class="card-header">
+                    <div class="row align-items-center">
+                        <div class="col-8">
+                            <!-- Title -->
+                            <h5 class="h3 mb-0">Total Orders</h5>
+                        </div>
+                    </div>
+                </div>
+                <!-- Card image -->
+                <!-- List group -->
+                <!-- Card body -->
+                <div class="card-body">
+                    <p class="card-text mb-4">Number of orders: {{customer_orders_count}}</p>
+                </div>
+            </div>
+        </div>
+    </div>
+    
+
+    <br>
+
+    <div class="row">
+        <div class="col">
+            <div class="card">
+                <!-- Card header -->
+                <div class="card-header border-0">
+                  <div class="row">
+                    <div class="col-6">
+                      <h3 class="mb-0">Customer Order Table</h3>
+                    </div>
+                    <div class="col-6 text-right">
+                      <a href="#" class="btn btn-sm btn-neutral btn-round btn-icon" data-toggle="tooltip" data-original-title="Edit product">
+                        <span class="btn-inner--icon"><i class="fas fa-user-edit"></i></span>
+                        <span class="btn-inner--text">Export</span>
+                      </a>
+                    </div>
+                  </div>
+                </div>
+                <!-- Light table -->
+                <div class="table-responsive">
+                  <table class="table align-items-center table-flush">
+                    <thead class="thead-light">
+                      <tr>
+                        <th>Product</th>
+                        <th>Date Ordered</th>
+                        <th>Category</th>
+                        <th>Status</th>
+                        <th>Modify/Delete</th>
+                      </tr>
+                    </thead>
+                    <tbody>
+                      
+                      {% for order in customer_orders %}
+                        <tr>
+                          <td class="table-user">
+                            <b>{{order.product}}</b>
+                          </td>
+                          <td>
+                            <span class="text-muted">{{order.date_created}}</span>
+                          </td>
+                          <td>
+                            <a href="#!" class="font-weight-bold">{{order.product.category}}</a>
+                          </td>
+                          <td>
+                            <span class="badge badge-dot mr-4">
+                              <i class="bg-{{order.status_choice}}"></i>
+                              <span class="status">{{order.status}}</span>
+                            </span>
+                          </td>
+                          <td class="table-actions">
+                            <a href="{% url 'update_order' order.id %}" class="table-action" data-toggle="tooltip" data-original-title="Edit product">
+                              <i class="fas fa-user-edit"></i>
+                            </a>
+                            <a href="{% url 'delete_order' order.id %}" class="table-action table-action-delete" data-toggle="tooltip" data-original-title="Delete product">
+                              <i class="fas fa-trash"></i>
+                            </a>
+                          </td>
+                        </tr>
+                      {% endfor %}
+                        
+                    </tbody>
+                  </table>
+                </div>
+            </div>
+        </div>  
+    </div>
+
+    <!--<div class="row">
+        <div class="row">
+          <div class="col">
+            <div class="card border-0">
+              <div id="map-custom" class="map-canvas" data-lat="40.748817" data-lng="-73.985428" style="height: 600px;"></div>
+            </div>
+          </div>
+        </div>
+    </div>-->
+    
+</div>
+<br>
+<br>
+<br>
+<br>
+{% endblock content %}

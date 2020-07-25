@@ -1,0 +1,12 @@
+
+<script src='https://api.mapbox.com/mapbox-gl-js/v1.11.0/mapbox-gl.js'></script>
+<link href='https://api.mapbox.com/mapbox-gl-js/v1.11.0/mapbox-gl.css' rel='stylesheet' />
+
+<div id='map' style='width: 100%; height: 40%;'></div>
+<script>
+    mapboxgl.accessToken = '{{mapbox_access_token}}';
+    var map = new mapboxgl.Map({
+    container: 'map',
+    style: 'mapbox://styles/geetech/ck3bz0evk2idj1cs96ezjo1h2',
+    });
+</script>

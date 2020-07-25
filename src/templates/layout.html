@@ -1,0 +1,50 @@
+{% load static %}
+
+<!DOCTYPE html>
+<html>
+
+<head>
+  <meta charset="utf-8">
+  <title>{% block title %} {% endblock%} | COP</title>
+
+  <!-- Favicon -->
+  <link rel="icon" href="{% static '../static/img/brand/favicon.png" type="image/png">
+  <!-- Fonts -->
+
+  <!-- Icons -->
+  <link rel="stylesheet" href="{% static '../static/vendor/nucleo/css/nucleo.css' %}" type="text/css">
+  <link rel="stylesheet" href="{% static '../static/vendor/@fortawesome/fontawesome-free/css/all.min.css' %}" type="text/css">
+  <!-- Page plugins -->
+  <!-- Argon CSS -->
+  <link rel="stylesheet" href="{% static '../static/css/argon.min.css' %}" type="text/css">
+  
+  {% block js %}
+  {% endblock js %}
+    
+</head>
+
+<body>
+  {% include "side_nav.html" %}
+    <div class="main-content" id="panel">
+        {% include "top_nav.html" %}
+
+        {% block content %}
+        {% endblock %}
+
+        {% include "footer.html" %}
+        <!-- Core -->
+        <script src="{% static '../static/vendor/jquery/dist/jquery.min.js' %}"></script>
+        <script src="{% static '../static/vendor/bootstrap/dist/js/bootstrap.bundle.min.js' %}"></script>
+        <script src="{% static '../static/vendor/js-cookie/js.cookie.js' %}"></script>
+        <script src="{% static '../static/vendor/jquery.scrollbar/jquery.scrollbar.min.js' %}"></script>
+        <script src="{% static '../static/vendor/jquery-scroll-lock/dist/jquery-scrollLock.min.js' %}"></script>
+        <!-- Optional JS -->
+        <script src="{% static '../static/vendor/chart.js/dist/Chart.min.js' %}"></script>
+        <script src="{% static '../static/vendor/chart.js/dist/Chart.extension.js' %}"></script>
+        <!-- Argon JS -->
+        <script src="{% static '../static/js/argon.min.js' %}"></script>
+
+    </div>
+</body>
+
+</html>

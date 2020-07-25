@@ -1,0 +1,15 @@
+{% extends 'layout.html' %}
+
+{% block title %} customers {% endblock title %}
+
+
+{% block content %}
+    <form action="" method="POST">
+        {% csrf_token %}
+        <div class="form-group">
+            {{ form }}
+        </div>
+        <input type="submit" name="submit">
+    </form>
+{% endblock content %}
+    
