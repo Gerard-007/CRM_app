@@ -1,5 +1,6 @@
-from django.shortcuts import render, redirect
+from django.shortcuts import render, redirect, get_list_or_404, get_object_or_404
 from django.views import generic
+from django.forms import inlineformset_factory
 from .models import Customer, Product, Order
 from .forms import CreateOrderForm
 
@@ -33,28 +34,43 @@ def customer_list(request):
     return render(request, "reports/customer_list.html", context)
 
 def customer_detail(request, customer_pk):
-    customer = Customer.objects.get(pk=customer_pk)
+    customer = get_object_or_404(Customer, id=customer_pk)
     customer_orders = customer.order_set.all()
     customer_orders_count = customer_orders.count()
     context = {'customer': customer, 'customer_orders': customer_orders, 'customer_orders_count': customer_orders_count}
     return render(request, "reports/customer_detail.html", context)
 
 
-def create_order(request):
-    form = CreateOrderForm()
+def create_order(request, customer_pk):
+    order_form_set = inlineformset_factory(Customer, Order, fields=('product', 'quantity', 'status'))
+    customer = get_object_or_404(Customer, id=customer_pk)
+    form_set = order_form_set(instance=customer)
+    # form = CreateOrderForm(initial={'customer':customer})
     if request.method == "POST":
         # print(f"posting-{request.POST}")
         form = CreateOrderForm(request.POST)
         if form.is_valid:
             form.save()
             return redirect('home')
-    context = {'form': form}
+    context = {'form_set': form_set}
     return render(request, "reports/order_form.html", context)
 
 
+# def create_order(request):
+#     form = CreateOrderForm()
+#     if request.method == "POST":
+#         # print(f"posting-{request.POST}")
+#         form = CreateOrderForm(request.POST)
+#         if form.is_valid:
+#             form.save()
+#             return redirect('home')
+#     context = {'form': form}
+#     return render(request, "reports/order_form.html", context)
+
+
 def update_order(request, order_pk):
-    order = Order.objects.get(id=order_pk)
-    form = OrderForm(instance=order)
+    order = get_object_or_404(Order, id=order_pk)
+    form = CreateOrderForm(instance=order)
     if request.method == "POST":
         # print(f"posting-{request.POST}")
         form = CreateOrderForm(request.POST, instance=order)
@@ -66,7 +82,10 @@ def update_order(request, order_pk):
 
 
 def delete_order(request, order_pk):
-    order = Order.objects.get(id=order_pk)
+    order = get_object_or_404(Order, id=order_pk)
+    if request.method == "POST":
+        order.delete()
+        return redirect('home')
     context = {'item': order}
     return render(request, "reports/delete.html", context)
 

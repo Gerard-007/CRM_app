@@ -5,5 +5,5 @@ class CreateOrderForm(ModelForm):
     
     class Meta:
         model = Order
-        fields = "__all__"
-        # fields = ("",)
+        fields = ['customer', 'product', 'quantity', 'status']
+        

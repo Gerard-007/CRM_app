@@ -24,8 +24,8 @@
                 <!-- Card image -->
                 <!-- List group -->
                 <ul class="list-group list-group-flush">
-                    <li class="list-group-item"><button type="button" class="btn btn-outline-info btn-lg btn-block">Update Customer</button></li>
-                    <li class="list-group-item"><button type="button" class="btn btn-outline-warning btn-lg btn-block">Delete Customer</button></li>
+                    <li class="list-group-item"><a type="button" class="btn btn-outline-info btn-lg btn-block">Update Customer</a></li>
+                    <li class="list-group-item"><a href="{% url 'create_order' customer.id %}" type="button" class="btn btn-outline-info btn-lg btn-block">Place Order</a></li>
                 </ul>
             </div>
         </div>
