@@ -73,8 +73,36 @@
             </div>
         </div>
     </div>
-    
-
+    <br>
+      <div class="row">
+        <div class="col-md-12">
+          <div class="card">
+              <!-- Card header -->
+              <div class="card-header">
+                  <div class="row align-items-center">
+                      <div class="col-8">
+                          <!-- Title -->
+                          <h5 class="h3 mb-0">Filter Customer Orders</h5>
+                      </div>
+                  </div>
+              </div>
+              <!-- Card image -->
+              <!-- List group -->
+              <!-- Card body -->
+              <div class="card-body">
+                <div class="form-group">
+                  <form action="" method="POST">
+                      {% csrf_token %}
+                      <div class="form-group">
+                          {{ my_filter.form }}
+                      </div>
+                      <input class="btn btn-outline-primary" type="submit" name="search">
+                  </form>
+                </div>
+              </div>
+          </div>
+        </div>
+      </div>
     <br>
 
     <div class="row">
@@ -99,6 +127,7 @@
                   <table class="table align-items-center table-flush">
                     <thead class="thead-light">
                       <tr>
+                        <th>Order ID</th>
                         <th>Product</th>
                         <th>Date Ordered</th>
                         <th>Category</th>
@@ -110,6 +139,9 @@
                       
                       {% for order in customer_orders %}
                         <tr>
+                          <td class="table-user">
+                            <b>{{order.order_id}}</b>
+                          </td>
                           <td class="table-user">
                             <b>{{order.product}}</b>
                           </td>

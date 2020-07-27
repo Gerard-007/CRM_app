@@ -3,6 +3,7 @@ from django.views import generic
 from django.forms import inlineformset_factory
 from .models import Customer, Product, Order
 from .forms import CreateOrderForm
+from .filters import OrderFilter
 
 # Create your views here.
 
@@ -36,21 +37,30 @@ def customer_list(request):
 def customer_detail(request, customer_pk):
     customer = get_object_or_404(Customer, id=customer_pk)
     customer_orders = customer.order_set.all()
+
+    #Applying filter which takes GET method and orders a customer requested
+    my_filter = OrderFilter(request.GET, queryset=customer_orders)
+    customer_orders = my_filter.qs
+
     customer_orders_count = customer_orders.count()
-    context = {'customer': customer, 'customer_orders': customer_orders, 'customer_orders_count': customer_orders_count}
+    context = {'customer': customer, 
+                'customer_orders': customer_orders, 
+                'customer_orders_count': customer_orders_count,
+                'my_filter': my_filter
+            }
     return render(request, "reports/customer_detail.html", context)
 
 
 def create_order(request, customer_pk):
-    order_form_set = inlineformset_factory(Customer, Order, fields=('product', 'quantity', 'status'))
+    OrderFormSet = inlineformset_factory(Customer, Order, fields=('product', 'quantity', 'status'), extra=10)
     customer = get_object_or_404(Customer, id=customer_pk)
-    form_set = order_form_set(instance=customer)
+    form_set = OrderFormSet(queryset=Order.objects.none(), instance=customer)
     # form = CreateOrderForm(initial={'customer':customer})
     if request.method == "POST":
         # print(f"posting-{request.POST}")
-        form = CreateOrderForm(request.POST)
-        if form.is_valid:
-            form.save()
+        form_set = OrderFormSet(request.POST, instance=customer)
+        if form_set.is_valid():
+            form_set.save()
             return redirect('home')
     context = {'form_set': form_set}
     return render(request, "reports/order_form.html", context)
